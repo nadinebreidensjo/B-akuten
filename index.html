@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BITCHAKUTEN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --hot: #FF2D6B;
+    --hot-dark: #C4004A;
+    --cream: #FFF5EE;
+    --black: #0D0D0D;
+    --soft: #FFE0EC;
+    --mid: #FFB3CC;
+    --accent: #FF7A00;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.15em;
+    color: var(--hot);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--hot); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(10rem, 25vw, 22rem);
+    color: var(--hot);
+    opacity: 0.04;
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.02em;
+    user-select: none;
+  }
+
+  .hero-pill {
+    display: inline-block;
+    background: var(--hot);
+    color: white;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    width: fit-content;
+    animation: pulse-pill 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-pill {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,45,107,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(255,45,107,0); }
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-title .hot { color: var(--hot); }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--mid);
+    margin-top: 1.5rem;
+    max-width: 550px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-primary {
+    background: var(--hot);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--hot-dark); transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-ghost:hover { border-color: var(--hot); color: var(--hot); transform: translateY(-2px); }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    z-index: 2;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--hot);
+    animation: slide-line 2s ease-in-out infinite;
+  }
+
+  @keyframes slide-line { 0% { left: -100%; } 100% { left: 100%; } }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--hot);
+    overflow: hidden;
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--hot-dark);
+    border-bottom: 1px solid var(--hot-dark);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 18s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.18em;
+    padding: 0 1.5rem;
+    color: white;
+  }
+
+  .marquee-track .dot {
+    color: rgba(255,255,255,0.5);
+    padding: 0;
+  }
+
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 7rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hot);
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255,245,238,0.7);
+    font-weight: 300;
+  }
+
+  .about-body strong {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card {
+    background: rgba(255,45,107,0.08);
+    border: 1px solid rgba(255,45,107,0.2);
+    border-radius: 12px;
+    padding: 2.5rem;
+    position: relative;
+  }
+
+  .about-card::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--hot);
+    line-height: 1;
+    opacity: 0.5;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--cream);
+    margin-top: 1.5rem;
+  }
+
+  .quote-attr {
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hot);
+  }
+
+  /* ── TOPICS ── */
+  .topics {
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 7rem 2.5rem;
+  }
+
+  .section-header {
+    max-width: 1100px;
+    margin: 0 auto 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.95;
+  }
+
+  .section-desc {
+    max-width: 380px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgba(255,245,238,0.55);
+    font-weight: 300;
+  }
+
+  .topics-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .topic-item {
+    background: var(--black);
+    padding: 2rem;
+    transition: background 0.25s;
+    cursor: default;
+  }
+
+  .topic-item:hover { background: rgba(255,45,107,0.07); }
+
+  .topic-emoji {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .topic-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .topic-desc {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: rgba(255,245,238,0.45);
+    font-weight: 300;
+  }
+
+  /* ── FORMAT ── */
+  .format {
+    padding: 7rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .format-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 4rem;
+  }
+
+  .format-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .format-step {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+
+  .format-step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--hot);
+    opacity: 0.25;
+    line-height: 1;
+    min-width: 3rem;
+    transition: opacity 0.2s;
+  }
+
+  .format-step:hover .step-num { opacity: 0.8; }
+
+  .step-content {}
+
+  .step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .step-body {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: rgba(255,245,238,0.5);
+    font-weight: 300;
+  }
+
+  .format-stat-box {
+    background: linear-gradient(135deg, rgba(255,45,107,0.12) 0%, rgba(255,122,0,0.06) 100%);
+    border: 1px solid rgba(255,45,107,0.25);
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+
+  .stat-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5.5rem;
+    color: var(--hot);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,245,238,0.5);
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  .stat-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,45,107,0.3);
+    margin: 1.5rem auto;
+  }
+
+  .format-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(255,245,238,0.65);
+    line-height: 1.55;
+  }
+
+  /* ── SOCIAL ── */
+  .social {
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 7rem 2.5rem;
+  }
+
+  .social-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .social-platforms {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .platform-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,245,238,0.7);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    font-weight: 400;
+  }
+
+  .platform-badge:hover { border-color: var(--hot); color: var(--cream); transform: translateY(-2px); }
+
+  .platform-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--hot);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .social-quote {
+    margin-top: 4rem;
+    padding: 3rem;
+    border-left: 3px solid var(--hot);
+    background: rgba(255,45,107,0.04);
+    border-radius: 0 12px 12px 0;
+  }
+
+  .social-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--cream);
+    line-height: 1.6;
+  }
+
+  .social-quote cite {
+    display: block;
+    margin-top: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--hot);
+    font-style: normal;
+  }
+
+  /* ── FOOTER / CTA ── */
+  footer {
+    padding: 7rem 2.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,45,107,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .footer-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(255,245,238,0.5);
+    margin-top: 1.2rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-meta {
+    margin-top: 5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .format-grid { grid-template-columns: 1fr; }
+    .section-header { flex-direction: column; align-items: flex-start; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about, .format, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .topics { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .social { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .social-quote { padding: 2rem 1.5rem; }
+  }
+
+  @media (max-width: 500px) {
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Bitchakuten™</span>
+  <ul class="nav-links">
+    <li><a href="#om-oss">Om oss</a></li>
+    <li><a href="#amnen">Ämnen</a></li>
+    <li><a href="#format">Format</a></li>
+    <li><a href="#footer-bg">Följ oss</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text" aria-hidden="true">BITCH</div>
+  <span class="hero-pill">🔥 Nytt på sociala medier</span>
+  <h1 class="hero-title">
+    BITCH<span class="hot">AKUTEN™</span>
+  </h1>
+  <p class="hero-subtitle">
+    En digital akutmottagning för dejtingkaos, expojkvänner, situationships och Tinder-psykos — plus falska vänner och obesvarad kärlek som får dig att ifrågasätta allt. Vi säger det ingen annan säger. 
+  Det du behöver höra, utan filter, no bullshit.
+  </p>
+  <div class="hero-cta-group">
+    <a href="#footer-bg" class="btn-primary">Till akuten</a>
+    <a href="#om-oss" class="btn-ghost">Läs mer</a>
+  </div>
+  <div class="hero-scroll-hint">
+    <span class="scroll-line"></span>
+    Scrolla
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Girl Power</span><span class="dot">✦</span>
+    <span>Jobbiga Ex</span><span class="dot">✦</span>
+    <span>Gränser</span><span class="dot">✦</span>
+    <span>Gaslighting</span><span class="dot">✦</span>
+    <span>Red Flags</span><span class="dot">✦</span>
+    <span>Råd från tjejer</span><span class="dot">✦</span>
+    <span>Boss Mode</span><span class="dot">✦</span>
+    <span>Drama Fix</span><span class="dot">✦</span>
+    <span>Ingen bullshit</span><span class="dot">✦</span>
+    <span>Girl Power</span><span class="dot">✦</span>
+    <span>Jobbiga Ex</span><span class="dot">✦</span>
+    <span>Gränser</span><span class="dot">✦</span>
+    <span>Gaslighting</span><span class="dot">✦</span>
+    <span>Red Flags</span><span class="dot">✦</span>
+    <span>Råd från tjejer</span><span class="dot">✦</span>
+    <span>Boss Mode</span><span class="dot">✦</span>
+    <span>Drama Fix</span><span class="dot">✦</span>
+    <span>Ingen bullshit</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="om-oss">
+  <div class="reveal">
+    <p class="about-label">Vilka är vi?</p>
+    <h2 class="about-title">Vi är dina nya bästa väninnor</h2>
+    <p class="about-body">
+      Bitchakuten är platsen du kommer till när du <strong>behöver ha råd</strong> — om killen du dejtar nu, exen som spökar, vänner som inte var så lojala som du trodde, situationships som spelade dig kallt, och killar som fick dig att ifrågasätta dig själv mer än de förtjänade.
+    </p>
+  </div>
+  <div class="about-visual reveal" style="transition-delay: 0.15s;">
+  
+    <div class="format-stat-box reveal" style="transition-delay: 0.2s;">
+      <span class="stat-big">100%</span>
+      <span class="stat-label">Bull-shit-fri zon</span>
+      <div class="stat-divider"></div>
+      <p class="format-tagline">
+        Vi säger det som det är — rakt, ärligt och rått.
+      </p>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section class="topics" id="amnen">
+  <div class="section-header reveal">
+    <div>
+      <p class="about-label">Vad tar vi upp?</p>
+      <h2 class="section-title">Allt du<br>funderat på</h2>
+    </div>
+    <p class="section-desc">
+      Från ex-dramat du inte kan sluta tänka på till kontorspolitiken som äter upp din energi — vi har sett det, levt det, och har vad du behöver höra.
+    </p>
+  </div>
+  <div class="topics-grid reveal">
+    <div class="topic-item">
+      <p class="topic-name">Jobbiga ex</p>
+      <p class="topic-desc">Blockera, inte blockera? Vi reder ut vad som faktiskt hjälper dig att gå vidare.</p>
+    </div>
+    <div class="topic-item">
+      <p class="topic-name">Störiga kollegor</p>
+      <p class="topic-desc">Den som tar åt sig dina idéer, micromanagern, baksnackaren — vi känner dem alla.</p>
+    </div>
+    <div class="topic-item">
+      <p class="topic-name">Red flags</p>
+      <p class="topic-desc">Hur ser de ut egentligen? Och varför ignorerade vi dem den gången? Ärligheten slår till.</p>
+    </div>
+    <div class="topic-item">
+      <p class="topic-name">Gaslighting & manipulation</p>
+      <p class="topic-desc">Känn igen det, namnge det, kom ur det. Utan terapeut-jargong.</p>
+    </div>
+    <div class="topic-item">
+      <p class="topic-name">Gränser på riktigt</p>
+      <p class="topic-desc">Hur man faktiskt sätter dem — och håller dem — utan att känna skuld.</p>
+    </div>
+    <div class="topic-item">
+      <p class="topic-name">Glow up</p>
+      <p class="topic-desc">Det roliga som händer efter chaos. Revenge-body valfritt, självrespekt obligatorisk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT -->
+<section class="format" id="format">
+  <div class="section-header reveal">
+    <div>
+      <p class="about-label">Hur funkar det?</p>
+      <h2 class="section-title">Reels som<br>faktiskt hjälper</h2>
+    </div>
+    <p class="section-desc">
+      
+    </p>
+  </div>
+  <div class="format-grid">
+    <div class="format-steps reveal">
+      <div class="format-step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <p class="step-title">Äkta historier</p>
+          <p class="step-body">Ni skickar in era berättelser — vi hjälper er reda ut kaoset och säger det som det är, baserat på egna erfarenheter och utan filter. Igenkänning, insikt och power.</p>
+        </div>
+      </div>
+      <div class="format-step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <p class="step-title">Intervjuformat</p>
+          <p class="step-body">Samtalsformat som en podd, men i reel-längd. Bra flow, naturliga reaktioner, inga manus.</p>
+        </div>
+      </div>
+      <div class="format-step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <p class="step-title">Praktiska råd</p>
+          <p class="step-body">Vi avslutar alltid med vad man faktiskt kan göra. Inga luddiga "lyssna på dig själv"-tips.</p>
+        </div>
+      </div>
+      <div class="format-step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <p class="step-title">Humor är obligatoriskt</p>
+          <p class="step-body">Livet är för kort för att vara seriös jämt. Vi skrattar åt det dåliga — för att gå vidare.</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bg"id="footer-bg">
+  </div>
+  <h2 class="footer-title reveal">Ring inte ditt ex.
+    <br>Kontakta oss istället!</h2>
+  <p class="footer-subtitle reveal">Vi är redo. Du också.</p>
+  <div class="footer-ctas reveal">
+    <a href="https://instagram.com/bitchakuten" class="btn-primary" target="_blank" rel="noopener">Följ på Instagram</a>
+    <a href="https://tiktok.com/@bitchakuten" class="btn-ghost" target="_blank" rel="noopener">Följ på TikTok</a>
+  </div>
+  <p class="footer-meta">© 2025 Bitchakuten™ · bitchakuten.se · Alla rättigheter reserverade</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+
