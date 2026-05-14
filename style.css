@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #0D0D0D;
+  color: #FFF5EE;
+}
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+}
+
+nav a {
+  color: #FFF5EE;
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+/* ── MAIN ── */
+main {
+  padding: 0;
+}
+
+/* ── TITLES ── */
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 10vw, 6rem);
+  line-height: 1;
+  margin: 0;
+}
+
+/* ── GLOBAL FIX ── */
+section {
+  padding: 4rem 1.2rem;
+}
+
+/* ── RESPONSIVE SAFETY ── */
+img, video {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  section {
+    padding: 3rem 1rem;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 12vw, 4rem);
+  }
+}
