@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BITCHAKUTEN — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;1,300&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --hot: #FF2D6B;
+    --hot-dark: #C4004A;
+    --cream: #FFF5EE;
+    --black: #0D0D0D;
+    --mid: #FFB3CC;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle radial glow */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,45,107,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Big ghost text behind everything */
+  .bg-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(8rem, 28vw, 22rem);
+    color: var(--hot);
+    opacity: 0.04;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.02em;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* Logo */
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    letter-spacing: 0.22em;
+    color: var(--hot);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.1s forwards;
+  }
+
+  /* Coming soon */
+  .coming-soon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 16vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.25s forwards;
+  }
+
+  .coming-soon .hot { color: var(--hot); }
+
+  /* Tagline */
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--mid);
+    margin-top: 1.8rem;
+    line-height: 1.5;
+    max-width: 420px;
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.4s forwards;
+  }
+
+  /* Divider */
+  .divider {
+    width: 50px;
+    height: 1px;
+    background: rgba(255,45,107,0.4);
+    margin: 2.5rem auto;
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.55s forwards;
+  }
+
+  /* Social links */
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.65s forwards;
+  }
+
+  .social-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,245,238,0.35);
+    margin-bottom: 0.3rem;
+  }
+
+  .social-row {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+
+  .social-btn.ig {
+    background: var(--hot);
+    color: white;
+    border: none;
+  }
+
+  .social-btn.ig:hover { background: var(--hot-dark); transform: translateY(-2px); }
+
+  .social-btn.tt {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.25);
+    font-weight: 400;
+  }
+
+  .social-btn.tt:hover { border-color: var(--hot); color: var(--hot); transform: translateY(-2px); }
+
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .btn-icon svg { width: 100%; height: 100%; }
+
+  /* Footer note */
+  .footer-note {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.14);
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.9s forwards;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-text" aria-hidden="true">BITCH</div>
+
+<div class="content">
+  <p class="logo">Bitchakuten™</p>
+
+  <h1 class="coming-soon">COMING<br><span class="hot">SOON</span></h1>
+
+  <p class="tagline">Stalka inte ditt ex — stalka oss istället.</p>
+
+  <div class="divider"></div>
+
+  <div class="social-links">
+    <p class="social-label">Hitta oss här</p>
+    <div class="social-row">
+      <a href="https://instagram.com/bitchakuten" class="social-btn ig" target="_blank" rel="noopener">
+        <div class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="white"/>
+          </svg>
+        </div>
+        Följ på Instagram
+      </a>
+      <a href="https://tiktok.com/@bitchakuten" class="social-btn tt" target="_blank" rel="noopener">
+        <div class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4c.3 2.5 1.6 4 4 4.5v3c-1.5 0-2.8-.5-4-1.3V16c0 3.5-2.7 6-6 6s-6-2.5-6-6 2.7-6 6-6c.4 0 .8 0 1.1.1V11c-.4-.1-.7-.1-1.1-.1-1.7 0-3 1.4-3 3.1S8.3 17 10 17s3-1.4 3-3.1V4h3z" fill="currentColor"/>
+          </svg>
+        </div>
+        Följ på TikTok
+      </a>
+    </div>
+  </div>
+</div>
+
+<p class="footer-note">© 2025 Bitchakuten™ · bitchakuten.se</p>
+
+</body>
+</html>
