@@ -199,6 +199,20 @@
     animation: fade-up 0.8s ease 0.9s forwards;
   }
 
+  .hero-image {
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease 0.8s forwards;
+  }
+
+  .hero-image img {
+    max-width: min(360px, 80vw);
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
+
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -240,6 +254,10 @@
         Följ på TikTok
       </a>
     </div>
+  </div>
+
+  <div class="hero-image">
+    <img src="ba-5.png" alt="Bitchakuten" />
   </div>
 </div>
 
