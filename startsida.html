@@ -368,7 +368,6 @@
     font-weight: 300;
   }
 
-  /* Fast 3 kolumner — inga tomma rutor vid bred skärm */
   .topics-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -402,7 +401,7 @@
     font-weight: 300;
   }
 
-  /* ── FORMAT ── */
+  /* ── FORMAT (dold) ── */
   .format-section {
     padding: 5rem 0;
   }
@@ -514,15 +513,12 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ── RESPONSIV ── */
-
-  /* Tablet ≤ 900px */
   @media (max-width: 900px) {
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .topics-grid { grid-template-columns: repeat(2, 1fr); }
     .section-header { flex-direction: column; align-items: flex-start; }
   }
 
-  /* Mobil ≤ 600px */
   @media (max-width: 600px) {
     nav { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
@@ -539,7 +535,6 @@
     .format-section { padding: 3.5rem 0; }
     footer          { padding: 4.5rem 0 3rem; }
 
-    /* En kolumn på mobil — inga tomma rutor */
     .topics-grid { grid-template-columns: 1fr; }
 
     .stat-box { padding: 2rem 1.5rem; }
@@ -547,7 +542,6 @@
 
     .hero-scroll-hint { display: none; }
 
-    /* Knappar full-bredd på mobil */
     .hero-cta-group { flex-direction: column; }
     .btn-primary, .btn-ghost { text-align: center; }
 
@@ -565,7 +559,7 @@
   <ul class="nav-links">
     <li><a href="#om-oss">Om oss</a></li>
     <li><a href="#amnen">Ämnen</a></li>
-    <li><a href="#format">Format</a></li>
+    <li style="display:none;"><a href="#format">Format</a></li>
     <li><a href="#cta">Följ oss</a></li>
   </ul>
 </nav>
@@ -644,7 +638,7 @@
         <h2 class="section-title">Allt du<br>funderat på</h2>
       </div>
       <p class="section-desc">
-        Från ex-dramat du inte kan sluta tänka på till kontorspolitiken som äter upp din energi — vi har sett det, levt det, och har vad du behöver höra.
+        Jobbiga ex, situationships, otrogna killar och män som inte kan bestämma sig — vi har levt det och är här för att berätta exakt vad du ska göra.
       </p>
     </div>
     <div class="topics-grid reveal">
@@ -653,8 +647,8 @@
         <p class="topic-desc">Blockera, inte blockera? Vi reder ut vad som faktiskt hjälper dig att gå vidare.</p>
       </div>
       <div class="topic-item">
-        <p class="topic-name">Störiga kollegor</p>
-        <p class="topic-desc">Den som tar åt sig dina idéer, micromanagern, baksnackaren — vi känner dem alla.</p>
+        <p class="topic-name">Situationships</p>
+        <p class="topic-desc">Han är inte din kille men beter sig som det — tills det passar honom. Vi avkodar situationshipet åt dig.</p>
       </div>
       <div class="topic-item">
         <p class="topic-name">Red flags</p>
@@ -669,15 +663,15 @@
         <p class="topic-desc">Hur man faktiskt sätter dem — och håller dem — utan att känna skuld.</p>
       </div>
       <div class="topic-item">
-        <p class="topic-name">Glow up</p>
-        <p class="topic-desc">Det roliga som händer efter chaos. Revenge-body valfritt, självrespekt obligatorisk.</p>
+        <p class="topic-name">Jobbdrama</p>
+        <p class="topic-desc">Kollegan som stjäl dina idéer, chefen som inte ser dig, kontorspolitiken som tar din energi. Ja, det räknas också.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FORMAT -->
-<section class="format-section" id="format">
+<!-- FORMAT (dold) -->
+<section class="format-section" id="format" style="display:none;">
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
